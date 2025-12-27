@@ -11,6 +11,15 @@ public class SubjectController {
     public String getAllSubject(){
         return "get all subjects";
     }
+    @GetMapping("{id}")
+    public String getSubjectById(
+            @PathVariable String id ,
+            @RequestParam(name ="name",defaultValue = "all")String name) {
+        System.out.println("GET BY ID" +id);
+        System.out.println("Filter BY name" +name);
+        return "get subject " +id + " filter by " +name;
+    }
+
     @PostMapping
     public String createSubject() {
         return "create subjects";
