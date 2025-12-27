@@ -8,16 +8,17 @@ import org.springframework.web.bind.annotation.*;
 public class SubjectController {
 
     @GetMapping
-    public String getAllSubject(){
-        return "get all subjects";
+    public String getAllSubject(@RequestParam(name ="name",defaultValue = "all")String name){
+        System.out.println("Filter BY name" +name);
+        return "get all subjects"+ " filter by " +name;
     }
     @GetMapping("{id}")
     public String getSubjectById(
-            @PathVariable String id ,
-            @RequestParam(name ="name",defaultValue = "all")String name) {
+            @PathVariable String id
+            ) {
         System.out.println("GET BY ID" +id);
-        System.out.println("Filter BY name" +name);
-        return "get subject " +id + " filter by " +name;
+
+        return "get subject " +id ;
     }
 
     @PostMapping
