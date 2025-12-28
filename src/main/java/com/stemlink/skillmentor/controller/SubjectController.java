@@ -1,37 +1,54 @@
 package com.stemlink.skillmentor.controller;
 
 
+import com.stemlink.skillmentor.entities.Subject;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping(path ="/api/v1/subjects")
 public class SubjectController {
 
+
+    private final List<Subject> subjects = new ArrayList<>((
+            List.of(new Subject("Maths","MT 101"),
+                    new Subject("Computer Science","CS 101"))
+    )
+    );
+
+
+
     @GetMapping
-    public String getAllSubject(@RequestParam(name ="name",defaultValue = "all")String name){
-        System.out.println("Filter BY name" +name);
-        return "get all subjects"+ " filter by " +name;
+    public List<Subject> getAllSubject(@RequestParam(name ="name",defaultValue = "all")String name){
+//        String result = subjects.toString();
+//        System.out.println(result);
+        return subjects;
     }
-    @GetMapping("{id}")
-    public String getSubjectById(
-            @PathVariable String id
-            ) {
-        System.out.println("GET BY ID" +id);
+//    @GetMapping("{id}")
+//    public String getSubjectById(
+//            @PathVariable int id) {
+//        System.out.println("GET BY ID" +id);
+//
+//        return subjects.get(id) ;
+//    }
 
-        return "get subject " +id ;
-    }
-
-    @PostMapping
-    public String createSubject() {
-        return "create subjects";
-    }
-    @PutMapping
-    public String updateSubject() {
-        return "update subjects";
-    }
-    @DeleteMapping
-    public String deleteSubject() {
-        return "delete subjects";
-    }
-
+//    @PostMapping
+//    public String createSubject(@RequestBody String subject) {
+//        System.out.println("POST");
+//        subjects.add(subject);
+//        return "create subjects";
+//    }
+//    @PutMapping("{id}")
+//    public String updateSubject(@RequestBody String updateSubject) {
+//        System.out.println("PUT"+ updateSubject);
+//        return "update subjects";
+//    }
+//    @DeleteMapping("{id}")
+//    public String deleteSubject(@PathVariable int id) {
+//        subjects.remove(id);
+//        return subjects.toString();
+//    }
+//
 }
