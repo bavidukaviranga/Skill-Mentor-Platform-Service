@@ -34,17 +34,27 @@ public class SubjectController {
 //        return subjects.get(id) ;
 //    }
 
-//    @PostMapping
-//    public String createSubject(@RequestBody String subject) {
-//        System.out.println("POST");
-//        subjects.add(subject);
-//        return "create subjects";
-//    }
-//    @PutMapping("{id}")
-//    public String updateSubject(@RequestBody String updateSubject) {
-//        System.out.println("PUT"+ updateSubject);
-//        return "update subjects";
-//    }
+    @PostMapping
+    public Subject createSubject(@RequestBody Subject subject) {
+
+        //validation to check subject length
+        if (subject.getSubjectName().length()>20){
+            Subject errorSubject = new Subject();
+            errorSubject.setSubjectName(" ");
+            errorSubject.setSubjectName(" ");
+            return errorSubject;
+        }
+
+
+        System.out.println("POST");
+        subjects.add(subject);
+        return subject;
+    }
+    @PutMapping("{id}")
+    public String updateSubject(@RequestBody String updateSubject) {
+        System.out.println("PUT"+ updateSubject);
+        return "update subjects";
+    }
 //    @DeleteMapping("{id}")
 //    public String deleteSubject(@PathVariable int id) {
 //        subjects.remove(id);
