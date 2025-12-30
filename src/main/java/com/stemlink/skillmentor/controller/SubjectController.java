@@ -1,7 +1,9 @@
 package com.stemlink.skillmentor.controller;
 
 
+import com.stemlink.skillmentor.dto.SubjectDTO;
 import com.stemlink.skillmentor.entities.Subject;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -21,7 +23,7 @@ public class SubjectController {
 
 
     @GetMapping
-    public List<Subject> getAllSubject(@RequestParam(name ="name",defaultValue = "all")String name){
+    public List<Subject> getAllSubjects(@RequestParam(name ="name",defaultValue = "all")String name){
 //        String result = subjects.toString();
 //        System.out.println(result);
         return subjects;
@@ -35,18 +37,24 @@ public class SubjectController {
 //    }
 
     @PostMapping
-    public Subject createSubject(@RequestBody Subject subject) {
+    public Subject createSubject(@RequestBody @Validated SubjectDTO subjectDTO) {
 
         //validation to check subject length
-        if (subject.getSubjectName().length()>20){
-            Subject errorSubject = new Subject();
-            errorSubject.setSubjectName(" ");
-            errorSubject.setSubjectName(" ");
-            return errorSubject;
-        }
+//        if (subject.getSubjectName().length()>20){
+//            Subject errorSubject = new Subject();
+//            errorSubject.setSubjectName(" ");
+//            errorSubject.setSubjectName(" ");
+//            return errorSubject;
+//        }
+
+        //mapping subject DTO to subject
+        Subject subject = new Subject();
+        subject.setSubjectName(subjectDTO.getSubjectName());
+        subject.setDescription(subjectDTO.getDescription());
 
 
-        System.out.println("POST");
+
+
         subjects.add(subject);
         return subject;
     }
