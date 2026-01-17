@@ -1,6 +1,7 @@
 package com.stemlink.skillmentor.controller;
 
-
+import org.modelmapper.ModelMapper;
+import jakarta.validation.Valid;
 import com.stemlink.skillmentor.dto.SubjectDTO;
 import com.stemlink.skillmentor.entities.Subject;
 import org.springframework.validation.annotation.Validated;
@@ -12,6 +13,8 @@ import java.util.List;
 @RestController
 @RequestMapping(path ="/api/v1/subjects")
 public class SubjectController {
+
+
 
 
     private final List<Subject> subjects = new ArrayList<>((
@@ -48,12 +51,12 @@ public class SubjectController {
 //        }
 
         //mapping subject DTO to subject
-        Subject subject = new Subject();
-        subject.setSubjectName(subjectDTO.getSubjectName());
-        subject.setDescription(subjectDTO.getDescription());
+//        Subject subject = new Subject();
+//        subject.setSubjectName(subjectDTO.getSubjectName());
+//        subject.setDescription(subjectDTO.getDescription());
 
-
-
+        //using model mapper
+        Subject subject = modelMapper.map(subjectDTO,Subject.class);
 
         subjects.add(subject);
         return subject;
