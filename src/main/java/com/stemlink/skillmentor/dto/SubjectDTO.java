@@ -9,10 +9,13 @@ import lombok.Data;
 @AllArgsConstructor
 public class SubjectDTO {
 
-    @Size(min = 3,max = 20,message ="Subject must be between 3 and 20 characters")
-    @NotBlank
-    @NotNull
-    @NotEmpty
+    @NotNull(message = "cannot be null")
+    @Size(min = 5, message = "Subject must be at least 5 characters long")
     private String subjectName;
+
+    @Size(max = 100, message = "Description must not exceed 100 characters")
     private String description;
+
+    @NotNull
+    private Long mentorId;
 }
