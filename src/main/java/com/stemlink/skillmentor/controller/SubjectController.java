@@ -1,46 +1,49 @@
 package com.stemlink.skillmentor.controller;
 
-import com.stemlink.skillmentor.services.SubjectService;
-import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
-import jakarta.validation.Valid;
 import com.stemlink.skillmentor.dto.SubjectDTO;
 import com.stemlink.skillmentor.entities.Subject;
-import org.springframework.validation.annotation.Validated;
+import com.stemlink.skillmentor.services.SubjectService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.*;
-
 
 import java.util.List;
 
 @RestController
-@RequestMapping(path ="/api/v1/subjects")
+@RequestMapping(path = "/api/v1/subjects")
 @RequiredArgsConstructor
-
 public class SubjectController {
 
     private final ModelMapper modelMapper;
     private final SubjectService subjectService;
 
-
     @GetMapping
-    public List<Subject> getAllSubjects(){
-
+    public List<Subject> getAllSubjects(@RequestParam(name="name", defaultValue = "all")String name){
         return subjectService.getAllSubjects();
     }
-
 
     @GetMapping("{id}")
     public Subject getSubjectById(@PathVariable Long id) {
         return subjectService.getSubjectById(id);
     }
 
+//    @PostMapping
+//    public Subject createSubject(@Valid @RequestBody Subject subject) {
+//        Long mentorId = 1L;
+//
+//        // check validation
+//        if(subject.getSubjectName().length() < 3){
+//            return null;
+//        }
+//        return subjectService.addNewSubject(mentorId, subject);
+//    }
 
     @PostMapping
     public Subject createSubject(@Valid @RequestBody SubjectDTO subjectDTO) {
         Subject subject = modelMapper.map(subjectDTO, Subject.class);
         return subjectService.addNewSubject(subjectDTO.getMentorId(), subject);
     }
-
 
     @PutMapping("{id}")
     public Subject updateSubject(@PathVariable Long id, @RequestBody SubjectDTO updatedSubjectDTO) {
@@ -52,5 +55,4 @@ public class SubjectController {
     public void deleteSubject(@PathVariable Long id) {
         subjectService.deleteSubject(id);
     }
-
 }

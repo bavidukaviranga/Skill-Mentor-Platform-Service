@@ -1,12 +1,11 @@
 package com.stemlink.skillmentor.dto;
 
 
+
 import jakarta.validation.constraints.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
-@AllArgsConstructor
 public class SubjectDTO {
 
     @NotNull(message = "cannot be null")
