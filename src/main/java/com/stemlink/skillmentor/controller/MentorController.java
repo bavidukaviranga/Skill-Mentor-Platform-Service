@@ -13,7 +13,7 @@ import java.util.List;
 @RequestMapping(path = "/api/v1/mentors")
 @RequiredArgsConstructor
 
-public class MentorController {
+public class MentorController extends AbstractController{
 
     private final MentorServices mentorServices;
 

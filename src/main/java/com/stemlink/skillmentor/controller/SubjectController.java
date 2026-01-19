@@ -20,7 +20,7 @@ public class SubjectController {
 
     @GetMapping
     public List<Subject> getAllSubjects(@RequestParam(name="name", defaultValue = "all")String name){
-        return subjectService.getAllSubjects();
+        return subjectService.getSubjects();
     }
 
     @GetMapping("{id}")

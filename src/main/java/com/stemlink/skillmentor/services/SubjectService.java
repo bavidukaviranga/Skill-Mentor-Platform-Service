@@ -32,11 +32,18 @@ public class SubjectService {
     }
 
 
-    public Subject updateSubjectById(Long id,Subject subject){
-        Subject existingSubject = subjectRepository.findById(id).get();
-//        Subject updateSubject = modelMapper.map(existingSubject,subject );
-        existingSubject.setSubjectName(subject.getSubjectName());
-        existingSubject.setDescription(subject.getDescription());
-        return SubjectRepository.save(existingSubject);
+    public Subject updateSubjectById(Long id, Subject updatedSubject){
+        Subject subject = subjectRepository.findById(id).get();
+        // TODO: use model mapper
+        subject.setSubjectName(updatedSubject.getSubjectName());
+        subject.setDescription(updatedSubject.getDescription());
+        return subjectRepository.save(subject);
     }
+
+    public void deleteSubject(Long id){
+        subjectRepository.deleteById(id);
+    }
+
+
+
 }
