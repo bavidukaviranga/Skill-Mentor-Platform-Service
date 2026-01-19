@@ -20,4 +20,8 @@ public class MentorServices {
     public List<Mentor> getAllMentors(){
         return mentorRepository.findAll();
     }
+
+    public Mentor addSubject(){
+        mentorRepository.
+    }
 }
