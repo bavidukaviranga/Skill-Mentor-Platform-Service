@@ -1,5 +1,6 @@
 package com.stemlink.skillmentor.services.impl;
 
+import com.stemlink.skillmentor.SkillmentorApplication;
 import com.stemlink.skillmentor.entities.Session;
 import com.stemlink.skillmentor.entities.Student;
 import com.stemlink.skillmentor.entities.Mentor;
@@ -9,15 +10,18 @@ import com.stemlink.skillmentor.repositories.MentorRepository;
 import com.stemlink.skillmentor.repositories.SessionRepository;
 import com.stemlink.skillmentor.repositories.StudentRepository;
 import com.stemlink.skillmentor.repositories.SubjectRepository;
+
 import com.stemlink.skillmentor.dto.SessionDTO;
 import com.stemlink.skillmentor.services.SessionService;
-
+import com.stemlink.skillmentor.utils.ValidationUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -44,7 +48,9 @@ public class SessionServiceImpl implements SessionService {
                     () -> new SkillMentorException("Subject not found", HttpStatus.NOT_FOUND)
             );
 
-
+            // Checking availability
+            ValidationUtils.validateMentorAvailability(mentor, sessionDTO.getSessionAt(), sessionDTO.getDurationMinutes());
+            ValidationUtils.validateStudentAvailability(student, sessionDTO.getSessionAt(), sessionDTO.getDurationMinutes());
 
 
             // Create and populate the Session entity

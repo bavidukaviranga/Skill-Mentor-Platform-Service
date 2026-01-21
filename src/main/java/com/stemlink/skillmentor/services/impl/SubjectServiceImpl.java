@@ -6,6 +6,7 @@ import com.stemlink.skillmentor.repositories.MentorRepository;
 import com.stemlink.skillmentor.repositories.SubjectRepository;
 import com.stemlink.skillmentor.services.SubjectService;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Primary;
@@ -25,7 +26,7 @@ public class SubjectServiceImpl implements SubjectService {
         return subjectRepository.findAll(); // SELECT * from subject
     }
 
-    public Subject addNewSubject(Long mentorId, Subject subject){
+    public Subject addNewSubject(Long mentorId, @NotNull Subject subject){
         Mentor mentor = mentorRepository.findById(mentorId).get();
         subject.setMentor(mentor);
         return subjectRepository.save(subject); // INSERT
