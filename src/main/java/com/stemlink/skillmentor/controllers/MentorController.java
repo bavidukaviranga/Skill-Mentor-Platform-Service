@@ -1,14 +1,13 @@
 package com.stemlink.skillmentor.controllers;
 
-
 import com.stemlink.skillmentor.dto.MentorDTO;
 import com.stemlink.skillmentor.entities.Mentor;
+import com.stemlink.skillmentor.services.MentorService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +21,6 @@ public class MentorController extends AbstractController {
     private final MentorService mentorService;
     private final ModelMapper modelMapper;
 
-
     @GetMapping
     public ResponseEntity<Page<Mentor>> getAllMentors(Pageable pageable) {
         Page<Mentor> mentors = mentorService.getAllMentors(pageable);
@@ -33,7 +31,6 @@ public class MentorController extends AbstractController {
     public ResponseEntity<Mentor> getMentorById(@PathVariable Long id) {
         Mentor mentor = mentorService.getMentorById(id);
         return sendOkResponse(mentor);
-
     }
 
     @PostMapping
@@ -41,7 +38,7 @@ public class MentorController extends AbstractController {
         Mentor mentor = modelMapper.map(mentorDTO, Mentor.class);
         Mentor createdMentor = mentorService.createNewMentor(mentor);
 
-        return sendOkResponse(createdMentor);
+        return sendCreatedResponse(createdMentor);
     }
 
     @PutMapping("{id}")

@@ -3,6 +3,7 @@ package com.stemlink.skillmentor.services.impl;
 import com.stemlink.skillmentor.entities.Mentor;
 import com.stemlink.skillmentor.exceptions.SkillMentorException;
 import com.stemlink.skillmentor.repositories.MentorRepository;
+import com.stemlink.skillmentor.services.MentorService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class MentorServices {
+public class MentorServiceImpl implements MentorService {
 
     private final MentorRepository mentorRepository;
     private final ModelMapper modelMapper;
@@ -87,6 +88,5 @@ public class MentorServices {
             throw new SkillMentorException("Failed to delete mentor", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 
 }
