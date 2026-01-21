@@ -1,4 +1,4 @@
-package com.stemlink.skillmentor.services;
+package com.stemlink.skillmentor.services.impl;
 import com.stemlink.skillmentor.repositories.SubjectRepository;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
