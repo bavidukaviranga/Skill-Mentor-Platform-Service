@@ -1,4 +1,4 @@
-package com.stemlink.skillmentor.controller;
+package com.stemlink.skillmentor.controllers;
 
 import com.stemlink.skillmentor.dto.SubjectDTO;
 import com.stemlink.skillmentor.entities.Subject;
@@ -19,8 +19,8 @@ public class SubjectController {
     private final SubjectService subjectService;
 
     @GetMapping
-    public List<Subject> getAllSubjects(@RequestParam(name="name", defaultValue = "all")String name){
-        return subjectService.getSubjects();
+    public List<Subject> getAllSubjects() {
+        return subjectService.getAllSubjects();
     }
 
     @GetMapping("{id}")
