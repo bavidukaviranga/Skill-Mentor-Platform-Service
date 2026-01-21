@@ -1,4 +1,4 @@
-package com.stemlink.skillmentor.controllers;
+package com.stemlink.skillmentor.controller;
 
 
 import com.stemlink.skillmentor.dto.ErrorResponse;

@@ -1,8 +1,8 @@
-package com.stemlink.skillmentor.controllers;
+package com.stemlink.skillmentor.controller;
 
 import com.stemlink.skillmentor.dto.SubjectDTO;
 import com.stemlink.skillmentor.entities.Subject;
-import com.stemlink.skillmentor.services.impl.SubjectService;
+import com.stemlink.skillmentor.services.SubjectService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -19,7 +19,7 @@ public class SubjectController {
     private final SubjectService subjectService;
 
     @GetMapping
-    public List<Subject> getAllSubjects(){
+    public List<Subject> getAllSubjects(@RequestParam(name="name", defaultValue = "all")String name){
         return subjectService.getSubjects();
     }
 
