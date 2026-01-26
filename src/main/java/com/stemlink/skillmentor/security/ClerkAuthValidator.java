@@ -1,4 +1,4 @@
-package com.stemlink.skillmentor.configs;
+package com.stemlink.skillmentor.security;
 
 public class ClerkAuthValidator {
     // validate with CLERK
