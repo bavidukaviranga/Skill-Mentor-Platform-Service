@@ -1,6 +1,7 @@
 package com.stemlink.skillmentor.configs;
 
-
+//import com.stemlink.skillmentor.security.JwtAuthenticationFilter;
+import com.stemlink.skillmentor.security.AuthenticationFilter;
 import com.stemlink.skillmentor.security.SkillMentorAuthenticationEntryPoint;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -8,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -23,11 +25,9 @@ import org.springframework.web.cors.CorsConfigurationSource;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-
-    private final AthenticationFilter athenticationFilter;
+    private final AuthenticationFilter clerkAuthenticationFilter;
 
     private final SkillMentorAuthenticationEntryPoint skillMentorAuthenticationEntryPoint;
-
     private final CorsConfigurationSource corsConfigurationSource;
 
     //TODO: handle unauthorized error 403
@@ -36,17 +36,17 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .cors(cors -> cors.configurationSource(corsConfigurationSource))
-                .csrf(csrf ->csrf.disable())
+                .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling(exception -> exception
-                        .authenticationEntryPoint( skillMentorAuthenticationEntryPoint)
+                        .authenticationEntryPoint(skillMentorAuthenticationEntryPoint)
                 )
-                .authorizeHttpRequests(authz-> authz
-                       .requestMatchers("/api/public/**").permitAll()
-                       .anyRequest().authenticated()
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/api/public/**").permitAll()
+                        .anyRequest().authenticated()
                 )
-                .addFilterBefore(athenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                .httpBasic(basic ->basic.disable());
+                .addFilterBefore(clerkAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .httpBasic(AbstractHttpConfigurer::disable);
 
         return http.build();
     }
