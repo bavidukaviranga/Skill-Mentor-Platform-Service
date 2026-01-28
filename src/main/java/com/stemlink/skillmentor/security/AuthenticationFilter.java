@@ -1,4 +1,5 @@
 package com.stemlink.skillmentor.security;
+
 import jakarta.annotation.Nonnull;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -19,10 +20,8 @@ import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
-public class JwtAuthenticationFilter extends OncePerRequestFilter {
-
-    private final JwtUtil jwtUtil;
-    //  BASE VALIDATOR
+public class AuthenticationFilter extends OncePerRequestFilter {
+    private final TokenValidator tokenValidator;
 
     @Override
     protected void doFilterInternal(@Nonnull HttpServletRequest request, @Nonnull HttpServletResponse response, @Nonnull FilterChain filterChain)
@@ -30,10 +29,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         String token = extractToken(request);
 
-        if (token != null && jwtUtil.validateToken(token)) {
-            String username = jwtUtil.extractUsername(token);
-            List<String> roles = jwtUtil.extractRoles(token);
-
+        if (token != null && tokenValidator.validateToken(token)) {
+            String userId = tokenValidator.extractUserId(token);
+//            List<String> roles = new ArrayList<>();
+            // Extract roles from the token
+            List<String> roles = tokenValidator.extractRoles(token);
             List<GrantedAuthority> authorities = roles != null ?
                     roles.stream()
                             .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
@@ -41,7 +41,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     new ArrayList<>();
 
             UsernamePasswordAuthenticationToken authentication =
-                    new UsernamePasswordAuthenticationToken(username, null, authorities);
+                    new UsernamePasswordAuthenticationToken(userId, null, authorities);
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
 
