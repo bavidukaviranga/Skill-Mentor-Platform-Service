@@ -18,8 +18,7 @@ import java.util.Map;
 @Slf4j
 @RequiredArgsConstructor
 @Component
-public class    SkillMentorAuthenticationEntryPoint implements AuthenticationEntryPoint {
-
+public class SkillMentorAuthenticationEntryPoint implements AuthenticationEntryPoint {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
@@ -32,8 +31,6 @@ public class    SkillMentorAuthenticationEntryPoint implements AuthenticationEnt
         Map<String, Object> body = new HashMap<>();
         body.put("status", HttpServletResponse.SC_UNAUTHORIZED);
         body.put("error", "Unauthorized or Token has expired");
-
-
 
         response.getWriter().write(objectMapper.writeValueAsString(body));
     }
